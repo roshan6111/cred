@@ -1,10 +1,84 @@
 # operational functions
-
+import datetime
+from datetime import date
 import os
 from flask import Flask, current_app
 import re
 from Utils import constants
 # from Service import ErrorCode
+
+
+
+def _iso_date_converter(_date):
+    """
+    convert date to iso format
+    :param _date: A String, date
+    :return: A String, iso date Format
+    """
+    month_in_string_flag_upper = False
+    month_in_string_flag = False
+    month = ''
+    year = ''
+    day = ''
+    if '/' in _date:
+        day, month, year = _date.split('/')
+        if len(year) != 4:
+            year = '20' + year
+    elif '-' in _date:
+        day, month, year = _date.split('-')
+        if len(year) != 4:
+            year = '20' + year
+    else:
+        day, month, year = _date.split(' ')
+        if len(year) != 4:
+            year = '20' + year
+    if len(month) > 2:
+        month_in_string_flag = True
+        month = month.strip()
+        if month.isupper():
+            month_in_string_flag_upper = True
+        month = date_json[month]
+    else:
+        month = int(month)
+    year = int(year)
+    day = int(day)
+    if '/' in _date:
+        if month_in_string_flag:
+            if month_in_string_flag_upper:
+                formatted_date = datetime.datetime.strptime(datetime.date(year, month, day).strftime('%d/%b/%Y'),
+                                                            '%d/%b/%Y').isoformat()
+            else:
+                formatted_date = datetime.datetime.strptime(datetime.date(year, month, day).strftime('%d/%b/%Y'),
+                                                            '%d/%b/%Y').isoformat()
+        else:
+            formatted_date = datetime.datetime.strptime(datetime.date(year, month, day).strftime('%d/%m/%Y'),
+                                                        '%d/%m/%Y').isoformat()
+    elif '-' in _date:
+        if month_in_string_flag:
+            if month_in_string_flag_upper:
+                formatted_date = datetime.datetime.strptime(
+                    datetime.date(year, month, day).strftime('%d-%b-%Y').upper(),
+                    '%d-%b-%Y').isoformat()
+            else:
+                formatted_date = datetime.datetime.strptime(datetime.date(year, month, day).strftime('%d-%b-%Y'),
+                                                            '%d-%b-%Y').isoformat()
+        else:
+            formatted_date = datetime.datetime.strptime(datetime.date(year, month, day).strftime('%d-%m-%Y'),
+                                                        '%d-%m-%Y').isoformat()
+    else:
+        if month_in_string_flag:
+            if month_in_string_flag_upper:
+                formatted_date = datetime.datetime.strptime(
+                    datetime.date(year, month, day).strftime('%d %b %Y').upper(),
+                    '%d %b %Y').isoformat()
+            else:
+                formatted_date = datetime.datetime.strptime(datetime.date(year, month, day).strftime('%d %b %Y'),
+                                                            '%d %b %Y').isoformat()
+        else:
+            formatted_date = datetime.datetime.strptime(datetime.date(year, month, day).strftime('%d %m %Y'),
+                                                        '%d %m %Y').isoformat()
+    return formatted_date
+
 
 def _get_date_format(_date):
     """
@@ -170,3 +244,15 @@ def is_ignorable(ignorable_patterns, line):
 #     """
 #     error_description = ErrorCode.ERROR_CODE[code]
 #     return error_description
+
+def reverse_indicator(start_date, end_date):
+    """
+    compare the dates and find pdf reverse
+    :param start_date: starting date
+    :param end_date: end date
+    :return: boolean value
+    """
+    if start_date > end_date:
+        return True
+    else:
+        return False

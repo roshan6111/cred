@@ -67,14 +67,12 @@ def get_verification(verificationInput):
                                         result = extractor.extract(file,verificationInput["password"])
                                         if 'transactions' in result:
                                                 if len(result['transactions']) > 0:
-                                                        analyserData = PdfAnalyser.analyser(result, verificationInput["bankName"])
-                                                        return json.dumps(result)
+                                                        analyserData = PdfAnalysers.analyser(result, verificationInput["bankName"])
+                                                        return analyserData
                                                         break
                                                 else:
                                                         counter += 1
                                         return result
-
-                return "roshan"
         except Exception as e:
                 print (e)
                 return "error"
