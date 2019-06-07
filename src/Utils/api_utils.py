@@ -74,7 +74,7 @@ def get_verification(verificationInput):
                                                 else:
                                                         counter += 1
                                 responseOutput = {
-                                        "error" : "extractor not available"
+                                        "error" : "format not available"
                                 } 
                                 return  json.dumps(responseOutput)
         except Exception as e:

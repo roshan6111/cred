@@ -8,7 +8,24 @@ from Utils import constants
 # from Service import ErrorCode
 
 
-
+def put_custum_acc_details(json_formatted_data, acc_details, account_regex):
+    """
+    Create account details with search function
+    :param json_formatted_data: where data will store
+    :param acc_details: A string, with account details
+    :param account_regex: regular expression
+    :return:
+    """
+    account_pattern = re.compile(account_regex)
+    m = account_pattern.search(acc_details)
+    data = {}
+    if m:
+        for key in m.groupdict():
+            data[key] = m.group(key)
+    json_formatted_data.update(data)
+    pretty_format_dictionary(json_formatted_data)
+    print ("success")
+    
 def _iso_date_converter(_date):
     """
     convert date to iso format
