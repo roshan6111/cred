@@ -73,10 +73,10 @@ def get_verification(verificationInput):
                                                         break
                                                 else:
                                                         counter += 1
-                                        responseOutput = {
-                                                "error" : "input not proper"
-                                        } 
-                                        return  json.dumps(responseOutput)
+                                responseOutput = {
+                                        "error" : "extractor not available"
+                                } 
+                                return  json.dumps(responseOutput)
         except Exception as e:
                 print (e)
                 return "error"

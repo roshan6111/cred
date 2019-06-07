@@ -26,7 +26,7 @@ def index():
               verificationInput = request.json
         except:
                 response['error'] = 'Not a Valid input'
-                return response
+                return json.dumps(response)
         verificationResponse = InputValidation.verification_input(verificationInput)
         if verificationResponse is not None:
                 response['error'] = verificationResponse
