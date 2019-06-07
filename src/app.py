@@ -32,8 +32,12 @@ def index():
                 response['error'] = verificationResponse
                 return json.dumps(response)
         else:
-                verificationOutput = api_utils.get_verification(verificationInput)
-                return verificationOutput
+
+                try:
+                        verificationOutput = api_utils.get_verification(verificationInput)
+                        return verificationOutput
+                except:
+                        return json.dumps(verificationOutput)
     else:
             return make_response("UnAuthorize User", 401)
 

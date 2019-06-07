@@ -51,7 +51,7 @@ def get_verification(verificationInput):
                 
         except:
                 response['error'] = 'file not stored properly'
-                return response        
+                return json.dumps(response)        
         remove_file_from_input(verificationInput)
         try:         
                 file = current_app.config.get('LOCAL_FILE_PATH') + verificationInput["fileName"]
@@ -73,7 +73,10 @@ def get_verification(verificationInput):
                                                         break
                                                 else:
                                                         counter += 1
-                                        return result
+                                        responseOutput = {
+                                                "error" : "input not proper"
+                                        } 
+                                        return  json.dumps(responseOutput)
         except Exception as e:
                 print (e)
                 return "error"
